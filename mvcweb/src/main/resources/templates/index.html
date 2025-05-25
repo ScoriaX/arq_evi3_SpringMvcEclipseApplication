@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Inicio</title>
+</head>
+<body>
+    <h1 th:text="${mensaje}">Mensaje por defecto</h1>
+    
+    <!-- Botón para ir a la página de operaciones -->
+    <form action="/operaciones" method="get" style="display:inline;">
+        <button type="submit">Ir a Operaciones</button>
+    </form>
+
+</body>
+</html>

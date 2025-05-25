@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Convertidor de grados</title>
+</head>
+<body>
+    <h1>Convertidor de grados</h1>
+
+    <form action="#" th:action="@{/operaciones/convertir}" method="post">
+        <label for="grados">Introduce grados:</label>
+        <input type="number" step="any" name="grados" id="grados" required />
+
+        <label for="tipo">Convertir de:</label>
+        <select name="tipo" id="tipo">
+            <option value="celsius">Celsius a Fahrenheit</option>
+            <option value="fahrenheit">Fahrenheit a Celsius</option>
+        </select>
+
+        <button type="submit">Convertir</button>
+    </form>
+
+    <div th:if="${resultado}">
+        <h2>Resultado:</h2>
+        <p th:text="${resultado}"></p>
+    </div>
+
+    <a href="/home">Volver al inicio</a>
+    <a href="/creditos">Ir a creditos</a>
+</body>
+</html>
