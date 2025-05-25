@@ -2,18 +2,230 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Inicio</title>
+    <title>Inicio - Cálculos Avanzados</title>
+    <style>
+        /* Variables CSS para colores y transiciones */
+        :root {
+            --primary-color: #007bff; /* Azul vibrante */
+            --button-operations-bg: #28a745; /* Verde para operaciones */
+            --button-imc-bg: #ffc107; /* Naranja/Amarillo para IMC */
+            --text-color: #333;
+            --container-bg: rgba(255, 255, 255, 0.95);
+            --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.2);
+            --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.3);
+            --shadow-hover: 0 10px 20px rgba(0, 0, 0, 0.35);
+            --transition-speed: 0.3s ease;
+        }
+
+        /* Estilo general del cuerpo */
+        body {
+            font-family: 'Montserrat', sans-serif; /* Fuente más moderna y elegante */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #222; /* Fondo oscuro para contraste */
+            color: var(--text-color);
+            
+            /* Imagen de fondo fija y paralaje */
+            /* ¡Asegúrate de reemplazar 'math_bg.jpg' con el nombre de tu archivo! */
+            background-image: url('/images/math_bg.jpg'); /* RUTA A TU IMAGEN FIJA */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed; /* Esto es clave para el efecto de paralaje */
+            
+            position: relative;
+            overflow: hidden; /* Oculta cualquier desbordamiento de animaciones */
+        }
+
+        /* Capa de superposición semitransparente (más oscura) */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); /* Superposición más oscura para contraste */
+            z-index: -1;
+        }
+
+        /* Contenedor principal */
+        .container {
+            background-color: var(--container-bg);
+            padding: 50px 70px;
+            border-radius: 15px; /* Más redondeado */
+            box-shadow: var(--shadow-medium);
+            text-align: center;
+            max-width: 900px; /* Un poco más ancho */
+            width: 90%;
+            animation: fadeInScale 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; /* Curva de animación más suave */
+            opacity: 0;
+            transform: scale(0.95); /* Empieza un poco más pequeño */
+            border: 1px solid rgba(255, 255, 255, 0.2); /* Borde sutil para un toque moderno */
+        }
+
+        /* Keyframes para la animación de entrada del contenedor */
+        @keyframes fadeInScale {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 40px;
+            font-size: 3.5em; /* Título aún más grande */
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4); /* Sombra más definida */
+            letter-spacing: 2px; /* Más espaciado entre letras */
+            animation: slideInFromTop 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; /* Retraso y curva de animación */
+            opacity: 0;
+            transform: translateY(-30px);
+            position: relative; /* Para el efecto de "glow" en el título */
+            text-transform: uppercase; /* Mayúsculas para el título */
+        }
+
+        /* Efecto de glow sutil en el título */
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 3px;
+            background: linear-gradient(to right, transparent, var(--primary-color), transparent);
+            opacity: 0.5;
+            transition: opacity 0.5s ease;
+        }
+        h1:hover::after {
+            opacity: 1; /* Se ilumina al pasar el ratón */
+        }
+
+
+        /* Keyframes para la animación de entrada del título */
+        @keyframes slideInFromTop {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Estilo de los botones */
+        button {
+            background-color: var(--button-operations-bg);
+            color: white;
+            padding: 18px 35px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.3em;
+            margin: 15px;
+            transition: background-color var(--transition-speed), transform 0.2s ease, box-shadow var(--transition-speed);
+            box-shadow: var(--shadow-medium);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.5px;
+        }
+
+        button:hover {
+            background-color: #218838; /* Verde más oscuro */
+            transform: translateY(-7px); /* Más levantamiento */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4); /* Sombra aún más profunda */
+        }
+
+        /* Efecto de resplandor en hover para botones (más pronunciado) */
+        button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3); /* Resplandor blanco semitransparente */
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.5s ease-out, height 0.5s ease-out; /* Transición más suave */
+            z-index: 0;
+        }
+
+        button:hover::before {
+            width: 250%; /* Expande más el resplandor */
+            height: 250%;
+        }
+
+        /* Asegura que el texto del botón esté por encima del resplandor */
+        button span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Estilo específico para el botón de IMC */
+        form[action="/imc"] button {
+            background-color: var(--button-imc-bg);
+            color: var(--text-color); /* Texto oscuro para botón IMC */
+        }
+
+        form[action="/imc"] button:hover {
+            background-color: #e0a800; /* Naranja más oscuro */
+        }
+
+        /* Asegura que los formularios estén en línea pero con algo de espacio */
+        form {
+            display: inline-block;
+            margin: 0 15px;
+            /* Añadir una pequeña animación de retraso para los botones */
+            animation: fadeInButton 1s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        /* Retraso de animación para cada botón */
+        form:nth-child(2) { /* Primer formulario (Operaciones) */
+            animation-delay: 1.2s;
+        }
+        form:nth-child(3) { /* Segundo formulario (IMC) */
+            animation-delay: 1.4s;
+        }
+
+        /* Keyframes para la animación de entrada de los botones */
+        @keyframes fadeInButton {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1 th:text="${mensaje}">Mensaje por defecto</h1>
-    
-    <!-- Botón para ir a la página de operaciones -->
-    <form action="/operaciones" method="get" style="display:inline;">
-        <button type="submit">Ir a Operaciones</button>
-    </form>
-    <form action="/imc" method="get" style="display:inline;">
-        <button type="submit">Calcular IMC</button>
-    </form>
+    <div class="container">
+        <h1 id="dynamic-message" th:text="${mensaje}">¡Bienvenido a los Cálculos!</h1>
+        
+        <form action="/operaciones" method="get">
+            <button type="submit"><span>Ir a Operaciones</span></button>
+        </form>
+        
+        <form action="/imc" method="get">
+            <button type="submit"><span>Calcular IMC</span></button>
+        </form>
+    </div>
 
+    <script>
+        // JavaScript para añadir un toque dinámico (opcional)
+        document.addEventListener('DOMContentLoaded', function() {
+            const dynamicMessage = document.getElementById('dynamic-message');
+            
+            // Puedes añadir interactividad aquí. Por ejemplo, si el mensaje viene fijo de Thymeleaf,
+            // pero quieres un efecto de "pulso" o un cambio de color al pasar el ratón.
+
+            // Ejemplo: cambiar color del título al pasar el ratón (CSS ya lo hace en h1::after)
+            // Otro ejemplo: un contador simple o un "tooltip" al pasar el ratón por los botones
+        });
+    </script>
 </body>
 </html>
