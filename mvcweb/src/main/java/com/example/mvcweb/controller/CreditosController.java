@@ -9,7 +9,10 @@ public class CreditosController {
 
     @GetMapping("/creditos")
     public String cred(Model model) {
-        model.addAttribute("mensaje", "Hecho por: Piero Poblete");
+        model.addAttribute("tituloPrincipal", "Hecho por:");
+        model.addAttribute("nombre1", "Piero Fabricio Poblete Andía");
+        model.addAttribute("nombre2", "Joshua David Ortiz Rosas ");
+        model.addAttribute("agradecimiento", "¡Gracias por usar nuestra aplicación y por tu apoyo!");
         return "cred";
     }
 }
