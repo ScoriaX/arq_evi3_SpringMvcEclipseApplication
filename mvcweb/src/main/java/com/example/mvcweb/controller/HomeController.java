@@ -9,7 +9,7 @@ public class HomeController {
 
     @GetMapping("/home")
     public String index(Model model) {
-        model.addAttribute("mensaje", "¡Hola desde Spring MVC!");
+        model.addAttribute("mensaje", "¡Bienvenido a los Cálculos!");
         return "index";
     }
 }
